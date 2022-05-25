@@ -8,9 +8,12 @@ ONNX_EXPORT = False
 def create_modules(module_defs, img_size, cfg):
     # Constructs module list of layer blocks from module configuration in module_defs
 
-    img_size = [img_size] * 2 if isinstance(img_size, int) else img_size  # expand if necessary
-    _ = module_defs.pop(0)  # cfg training hyperparams (unused)
-    output_filters = [3]  # input channels
+    #img_size = [img_size] * 2 if isinstance(img_size, int) else img_size  # expand if necessary
+    training_params = module_defs.pop(0)
+    img_size = [training_params['width'],training_params['height']]
+    output_filters = [training_params['channels']]  # input channels
+     # cfg training hyperparams (unused)
+    #output_filters = [3]  # input channels
     module_list = nn.ModuleList()
     routs = []  # list of layers which rout to deeper layers
     yolo_index = -1
